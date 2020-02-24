@@ -1,0 +1,20 @@
+version: "3"
+services:
+  db:
+    image: "postgres:12.1"
+    container_name: "my_postgres"
+    environment:
+      - POSTGRES_PASSWORD=Sekret
+      - POSTGRES_USER=django_user
+      - POSTGRES_DB=django_db
+    volumes:
+      - /home/ilya/postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+
+  adminer:
+    container_name: "pgamin_container"
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
