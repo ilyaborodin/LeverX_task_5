@@ -1,8 +1,7 @@
 from django.urls import path, include
-from .views import Test
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path("", Test.as_view()),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 ]
