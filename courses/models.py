@@ -82,4 +82,9 @@ class Assessment(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, verbose_name="Author of this comment",
                              blank=False, on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, verbose_name="Assessment",
+                                   blank=False, on_delete=models.CASCADE)
     comment = models.CharField(verbose_name="Text of comment", blank=False, max_length=200)
+
+    def __str__(self):
+        return "Comment of {}".format(self.user.username)
