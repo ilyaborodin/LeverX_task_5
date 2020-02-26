@@ -30,7 +30,7 @@ class User(AbstractUser):
 
 
 class Course(models.Model):
-    user = models.ManyToManyField(Teacher, verbose_name="Teachers of this course", blank=True)
+    user = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True)
     title = models.CharField(verbose_name="Name", blank=False, max_length=20)
     description = models.TextField(verbose_name="Description", blank=True, max_length=200)
 
@@ -61,7 +61,7 @@ class Homework(models.Model):
 class Solution(models.Model):
     homework = models.OneToOneField(Homework, verbose_name="Homework",
                                     blank=False, on_delete=models.CASCADE)
-    user = models.OneToOneField(Student, verbose_name="Author",
+    user = models.OneToOneField(User, verbose_name="Author",
                                 blank=False, on_delete=models.CASCADE)
     link = models.CharField(verbose_name="Link of solution", blank=False, max_length=80)
 
