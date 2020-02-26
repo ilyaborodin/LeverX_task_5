@@ -8,7 +8,7 @@ class User(AbstractUser):
     USER_TYPES = Choices("Student", "Teacher", "Admin")
     user_type = models.CharField(verbose_name="Type of user", blank=False,
                                  choices=USER_TYPES, max_length=10)
-    email = models.EmailField(verbose_name='Email address', blank=False)
+    email = models.EmailField(verbose_name='Email address', blank=False, unique=True)
     REQUIRED_FIELDS = ['email', 'user_type']
 
     def __str__(self):
