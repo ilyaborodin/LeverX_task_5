@@ -144,11 +144,11 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = 'courses.User'
 
-DJOSER = {
-    'SERIALIZERS': {
-         'user_create': 'courses.serializers.UserRegistrationSerializer'
-    }
-}
+# DJOSER = {
+#     'SERIALIZERS': {
+#          'user_create': 'courses.serializers.UserRegistrationSerializer'
+#     }
+# }
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
