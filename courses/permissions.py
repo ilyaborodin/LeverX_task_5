@@ -3,7 +3,7 @@ from rest_framework import permissions
 
 class IsStudent(permissions.BasePermission):
 
-    message = "Only API Student can access APIs"
+    message = "Only Student can access this API"
 
     student = "Student"
 
@@ -18,7 +18,7 @@ class IsStudent(permissions.BasePermission):
 
 class IsTeacher(permissions.BasePermission):
 
-    message = "Only API Teacher can access APIs"
+    message = "Only Teacher can access API"
 
     teacher = "Teacher"
 
