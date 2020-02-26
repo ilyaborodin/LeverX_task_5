@@ -1,9 +1,9 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from Task5.courses.serializers import CourseDetailSerializer, CoursesListSerializer
-from Task5.courses.models import Course
-from Task5.courses.permissions import IsStudent, IsTeacher, IsOwnerOrReadOnly
+from courses.serializers import CourseDetailSerializer, CoursesListSerializer
+from courses.models import Course
+from courses.permissions import IsStudent, IsTeacher, IsOwnerOrReadOnly
 from django.db.models import Q
 
 
