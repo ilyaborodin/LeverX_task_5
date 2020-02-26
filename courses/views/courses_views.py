@@ -46,7 +46,7 @@ class AuthorsCoursesListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Course.objects.filter(author=user)
+        return Course.objects.filter(user=user)
 
 
 @permission_classes((IsAuthenticated, IsTeacher))
@@ -72,4 +72,4 @@ class TeachersAndAuthorsCoursesListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Course.objects.filter(Q(teachers=user) | Q(author=user))
+        return Course.objects.filter(Q(teachers=user) | Q(user=user))
