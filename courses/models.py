@@ -15,22 +15,22 @@ class User(AbstractUser):
         return super().username
 
 
-class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-    def __str__(self):
-        return self.user.username
+# class Teacher(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#
+#     def __str__(self):
+#         return self.user.username
+#
+#
+# class Student(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#
+#     def __str__(self):
+#         return self.user.username
 
 
 class Course(models.Model):
-    teacher = models.ManyToManyField(Teacher, verbose_name="Teachers of this course", blank=True)
+    user = models.ManyToManyField(Teacher, verbose_name="Teachers of this course", blank=True)
     title = models.CharField(verbose_name="Name", blank=False, max_length=20)
     description = models.TextField(verbose_name="Description", blank=True, max_length=200)
 
@@ -61,8 +61,8 @@ class Homework(models.Model):
 class Solution(models.Model):
     homework = models.OneToOneField(Homework, verbose_name="Homework",
                                     blank=False, on_delete=models.CASCADE)
-    student = models.OneToOneField(Student, verbose_name="Author",
-                                   blank=False, on_delete=models.CASCADE)
+    user = models.OneToOneField(Student, verbose_name="Author",
+                                blank=False, on_delete=models.CASCADE)
     link = models.CharField(verbose_name="Link of solution", blank=False, max_length=80)
 
     def __str__(self):
