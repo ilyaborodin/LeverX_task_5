@@ -15,20 +15,6 @@ class User(AbstractUser):
         return self.username
 
 
-# class Teacher(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#
-#     def __str__(self):
-#         return self.user.username
-#
-#
-# class Student(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#
-#     def __str__(self):
-#         return self.user.username
-
-
 class Course(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="author")
     teachers = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True, related_name="teachers")
@@ -89,3 +75,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment of {}".format(self.user.username)
+
+
+# class Teacher(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#
+#     def __str__(self):
+#         return self.user.username
+#
+#
+# class Student(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#
+#     def __str__(self):
+#         return self.user.username
+
