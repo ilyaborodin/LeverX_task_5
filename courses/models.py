@@ -24,16 +24,15 @@ class Course(models.Model):
     user = models.ForeignKey(User,
                              verbose_name="Author",
                              on_delete=models.CASCADE,
-                             blank=False,
-                             related_name="+")
+                             blank=False)
     teachers = models.ManyToManyField(User,
                                       verbose_name="Teachers of this course",
                                       blank=True,
-                                      related_name="+")
+                                      related_name="teacher_courses")
     students = models.ManyToManyField(User,
                                       verbose_name="Students of this course",
                                       blank=True,
-                                      related_name="+")
+                                      related_name="student_courses")
     title = models.CharField(verbose_name="Name",
                              blank=False,
                              max_length=20,
