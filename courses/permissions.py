@@ -16,7 +16,7 @@ class IsStudent(permissions.BasePermission):
         return user_type == self.student
 
 
-class IsStudent(permissions.BasePermission):
+class IsTeacher(permissions.BasePermission):
 
     message = "Only API Teacher can access APIs"
 
