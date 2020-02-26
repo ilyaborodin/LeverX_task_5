@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import CourseDetailSerializer, CoursesListSerializer
 from courses.models import Course
-from courses.permissions import IsStudent, IsTeacher, IsOwnerOrReadOnly
+from courses.permissions import IsStudent, IsTeacher, IsOwner
 from django.db.models import Q
 
 
@@ -26,7 +26,7 @@ class StudentsCourseDetailView(generics.RetrieveAPIView):
     queryset = Course.objects.all()
 
 
-@permission_classes((IsAuthenticated, IsStudent))
+@permission_classes((IsAuthenticated, IsTeacher, IsOwner))
 class TeachersCourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     class StudentsCoursesDetailView(generics.RetrieveAPIView):
         """
