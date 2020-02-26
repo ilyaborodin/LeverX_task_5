@@ -13,5 +13,5 @@ urlpatterns += [
     path('courses/teachers/author/', courses_views.AuthorsCoursesListView.as_view()),
     path('courses/teachers/teacher/', courses_views.TeachersCoursesListView.as_view()),
     path('courses/student/all/', courses_views.CoursesListView.as_view()),
-    path('courses/course/detail/<int:pk>/', courses_views.CourseDetailSerializer)
+    path('courses/course/detail/<int:pk>/', courses_views.CoursesDetailView.as_view())
 ]
