@@ -16,14 +16,25 @@ class CourseCreateView(generics.CreateAPIView):
     serializer_class = CourseDetailSerializer
 
 
-@permission_classes((IsAuthenticated, IsOwnerOrReadOnly))
-class CoursesDetailView(generics.RetrieveUpdateDestroyAPIView):
+@permission_classes((IsAuthenticated, IsStudent))
+class StudentsCourseDetailView(generics.RetrieveAPIView):
     """
-    Retrieve, update, destroy course
+    Retrieve course
     Available for all users
     """
     serializer_class = CourseDetailSerializer
     queryset = Course.objects.all()
+
+
+@permission_classes((IsAuthenticated, IsStudent))
+class TeachersCourseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    class StudentsCoursesDetailView(generics.RetrieveAPIView):
+        """
+        Retrieve, update, destroy teacher's own course
+        Available for teachers
+        """
+        serializer_class = CourseDetailSerializer
+        queryset = Course.objects.all()
 
 
 @permission_classes((IsAuthenticated, IsStudent))
