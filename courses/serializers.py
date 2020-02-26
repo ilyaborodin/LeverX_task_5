@@ -8,13 +8,13 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         model = Course
         fields = "__all__"
         extra_kwargs = {
-            "author": {
+            "user": {
                 "read_only": True
             }
         }
 
     def create(self, validated_data):
-        if 'author' not in validated_data:
+        if 'user' not in validated_data:
             validated_data['user'] = self.context['request'].user
         return super().create(validated_data)
 
