@@ -12,7 +12,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email', 'user_type']
 
     def __str__(self):
-        return super().username
+        return self.username
 
 
 # class Teacher(models.Model):
@@ -30,9 +30,9 @@ class User(AbstractUser):
 
 
 class Course(models.Model):
-    author = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    teachers = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True)
-    title = models.CharField(verbose_name="Name", blank=False, max_length=20)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="author")
+    teachers = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True, related_name="teachers")
+    title = models.CharField(verbose_name="Name", blank=False, max_length=20, unique=True)
     description = models.TextField(verbose_name="Description", blank=True, max_length=200)
 
     def __str__(self):
