@@ -28,13 +28,12 @@ class StudentsCourseDetailView(generics.RetrieveAPIView):
 
 @permission_classes((IsAuthenticated, IsTeacher, IsOwner))
 class TeachersCourseDetailView(generics.RetrieveUpdateDestroyAPIView):
-    class StudentsCoursesDetailView(generics.RetrieveAPIView):
-        """
-        Retrieve, update, destroy teacher's own course
-        Available for teachers
-        """
-        serializer_class = CourseDetailSerializer
-        queryset = Course.objects.all()
+    """
+    Retrieve, update, destroy teacher's own course
+    Available for teachers
+    """
+    serializer_class = CourseDetailSerializer
+    queryset = Course.objects.all()
 
 
 @permission_classes((IsAuthenticated, IsStudent))
