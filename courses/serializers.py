@@ -1,8 +1,28 @@
 from .models import Course
-from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
-from model_utils import Choices
 
+
+class CourseDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Course
+        fields = "__all__"
+        extra_kwargs = {
+            "author": {
+                "read_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        if 'author' not in validated_data:
+            validated_data['author'] = self.context['request'].user
+        return super().create(validated_data)
+
+
+class CoursesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = "__all__"
 
 # class UserRegistrationSerializer(UserCreateSerializer):
 #     """Create user and add profiles to it"""
@@ -24,18 +44,3 @@ from model_utils import Choices
 #             )
 #             student.save()
 #         return user
-
-
-class CourseDetailSerializer(serializers.ModelSerializer):
-    student = serializers.HiddenField(default=serializers)
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
-    class Meta:
-        model = Course
-        fields = "__all__"
-
-
-class CoursesListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Course
-        fields = "__all__"
