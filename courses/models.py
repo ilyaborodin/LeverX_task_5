@@ -30,7 +30,8 @@ class User(AbstractUser):
 
 
 class Course(models.Model):
-    user = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True)
+    author = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    teachers = models.ManyToManyField(User, verbose_name="Teachers of this course", blank=True)
     title = models.CharField(verbose_name="Name", blank=False, max_length=20)
     description = models.TextField(verbose_name="Description", blank=True, max_length=200)
 
