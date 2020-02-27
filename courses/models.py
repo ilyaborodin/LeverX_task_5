@@ -21,10 +21,10 @@ class User(AbstractUser):
 
 
 class Course(models.Model):
-    user = models.ForeignKey(User,
-                             verbose_name="Author",
-                             on_delete=models.CASCADE,
-                             blank=False)
+    creator = models.ForeignKey(User,
+                                verbose_name="Author",
+                                on_delete=models.CASCADE,
+                                blank=False)
     teachers = models.ManyToManyField(User,
                                       verbose_name="Teachers of this course",
                                       blank=True,
@@ -88,10 +88,10 @@ class Solution(models.Model):
                                     verbose_name="Homework",
                                     blank=False,
                                     on_delete=models.CASCADE)
-    user = models.ForeignKey(User,
-                             verbose_name="Author",
-                             blank=False,
-                             on_delete=models.CASCADE)
+    creator = models.ForeignKey(User,
+                                verbose_name="Author",
+                                blank=False,
+                                on_delete=models.CASCADE)
     link = models.CharField(verbose_name="Link of solution",
                             blank=False, max_length=100)
     date_created = models.DateTimeField(verbose_name="Date of creation",
@@ -115,10 +115,10 @@ class Assessment(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User,
-                             verbose_name="Author of this comment",
-                             blank=False,
-                             on_delete=models.CASCADE)
+    creator = models.ForeignKey(User,
+                                verbose_name="Author of this comment",
+                                blank=False,
+                                on_delete=models.CASCADE)
     assessment = models.ForeignKey(Assessment,
                                    verbose_name="Assessment",
                                    blank=False,
@@ -131,18 +131,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment of {}".format(self.user.username)
-
-
-# class Teacher(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#
-#     def __str__(self):
-#         return self.user.username
-#
-#
-# class Student(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#
-#     def __str__(self):
-#         return self.user.username
-

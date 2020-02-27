@@ -1,10 +1,9 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from courses.serializers import CourseDetailSerializer, CoursesListSerializer
+from courses.serializers import courses_serializers
 from courses.models import Course
-from courses.permissions import IsStudent, IsTeacher, IsOwner
-from django.db.models import Q
+from courses.permissions import IsTeacher, IsTeacherOrReadOnly, IsTeacherOrStudent
 
 
 @permission_classes((IsAuthenticated, IsTeacher))
@@ -13,73 +12,54 @@ class CourseCreateView(generics.CreateAPIView):
     Create Course
     Available for teachers
     """
-    serializer_class = CourseDetailSerializer
+    serializer_class = courses_serializers.CreatorCourseDetailSerializer
 
 
-@permission_classes((IsAuthenticated, IsStudent))
-class StudentsCourseDetailView(generics.RetrieveAPIView):
+@permission_classes((IsAuthenticated, IsTeacherOrReadOnly))
+class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve course
-    Available for all users
+    Get course for students
+    Retrieve/Update/Destroy course for creator
+    Retrieve available course, update students field for teachers
+    Available for all teachers, students
     """
-    serializer_class = CourseDetailSerializer
+    serializer_class = courses_serializers.CourseDetailSerializer
     queryset = Course.objects.all()
 
-
-@permission_classes((IsAuthenticated, IsTeacher, IsOwner))
-class TeachersCourseDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Retrieve, update, destroy teacher's own course
-    Available for teachers
-    """
-    serializer_class = CourseDetailSerializer
-    queryset = Course.objects.all()
+    def get_serializer_class(self):
+        if self.request.user == self.get_object().creator:
+            serializer = courses_serializers.CreatorCourseDetailSerializer
+        else:
+            serializer = courses_serializers.CourseDetailSerializer
+        return serializer
 
 
-@permission_classes((IsAuthenticated, IsStudent))
+@permission_classes((IsAuthenticated, IsTeacherOrStudent))
 class CoursesListView(generics.ListAPIView):
     """
-    Return all courses
-    Available for students
+    Retrieve all courses for students
+    Retrieve all available courses for teachers
+    Available for all teachers, students
     """
-    serializer_class = CoursesListSerializer
-    queryset = Course.objects.all()
+    serializer_class = courses_serializers.CoursesListSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.user_type == "Teacher":
+            queryset = Course.objects.filter(teachers=user)
+        else:
+            queryset = Course.objects.all()
+        return queryset
 
 
 @permission_classes((IsAuthenticated, IsTeacher))
 class AuthorsCoursesListView(generics.ListAPIView):
     """
-    Return list of courses where user is creator
+    Retrieve courses where user is creator
     Available for Teachers
     """
-    serializer_class = CoursesListSerializer
+    serializer_class = courses_serializers.CoursesListSerializer
 
     def get_queryset(self):
         user = self.request.user
-        return Course.objects.filter(user=user)
-
-
-@permission_classes((IsAuthenticated, IsTeacher))
-class TeachersCoursesListView(generics.ListAPIView):
-    """
-    Return list of courses where user is teacher and isn't creator
-    Available for Teachers
-    """
-    serializer_class = CoursesListSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Course.objects.filter(teachers=user)
-
-
-@permission_classes((IsAuthenticated, IsTeacher))
-class TeachersAndAuthorsCoursesListView(generics.ListAPIView):
-    """
-    Return list of courses where user can be teacher or creator
-    Available for Teachers
-    """
-    serializer_class = CoursesListSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Course.objects.filter(Q(teachers=user) | Q(user=user))
+        return Course.objects.filter(creator=user)

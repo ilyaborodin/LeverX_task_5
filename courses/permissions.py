@@ -2,7 +2,9 @@ from rest_framework import permissions
 
 
 class IsStudent(permissions.BasePermission):
-
+    """
+    Check is user student
+    """
     message = "Only Student can access this API"
 
     student = "Student"
@@ -17,7 +19,9 @@ class IsStudent(permissions.BasePermission):
 
 
 class IsTeacher(permissions.BasePermission):
-
+    """
+    Check is user teacher
+    """
     message = "Only Teacher can access API"
 
     teacher = "Teacher"
@@ -31,6 +35,19 @@ class IsTeacher(permissions.BasePermission):
         return user_type == self.teacher
 
 
-class IsOwner(permissions.BasePermission):
+class IsTeacherOrReadOnly(permissions.BasePermission):
+    """
+    Check is user teacher or method save
+    """
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.creator.user_type == request.user.user_type == "Teacher"
+
+
+class IsTeacherOrStudent(permissions.BasePermission):
+    """
+    Check is user teacher or student
+    """
+    def has_permission(self, request, view):
+        return request.user.user_type == "Teacher" or "Student"
