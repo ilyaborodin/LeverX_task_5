@@ -1,8 +1,25 @@
-from .models import Course
+from .models import Course, User
 from rest_framework import serializers
+from djoser.serializers import UserSerializer
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
+    teachers = serializers.PrimaryKeyRelatedField(many=True,
+                                                  queryset=User.objects.all(),)
+
+    def validate_teachers(self, attrs):
+        if len(attrs) != len(set(attrs)):
+            raise serializers.ValidationError('All users must be unique.')
+        for teacher in attrs:
+            if teacher.user_type != "Teacher":
+                raise serializers.ValidationError('All users must be teachers.')
+        return attrs
+
+    def update(self, instance, validated_data):
+        print(instance.user)
+        if "teacher" in validated_data and instance.user not in validated_data["teachers"]:
+            validated_data["teachers"].append(instance.user)
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Course
