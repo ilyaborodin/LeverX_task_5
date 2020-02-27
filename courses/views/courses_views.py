@@ -48,7 +48,7 @@ class CoursesListView(generics.ListAPIView):
         if user.user_type == "Teacher":
             queryset = Course.objects.filter(teachers=user)
         else:
-            queryset = Course.objects.all()
+            queryset = Course.objects.filter(students=user)
         return queryset
 
 
