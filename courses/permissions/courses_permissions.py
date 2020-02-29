@@ -30,9 +30,9 @@ class IsTeacherOrReadOnly(permissions.BasePermission):
     message = "Only teacher or student with method save can access this API"
 
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
+        if request.user in obj.students and request.method in permissions.SAFE_METHODS:
             return True
-        return request.user.user_type == "Teacher"
+        return request.user in obj.teachers and request.user.user_type == "Teacher"
 
 
 class IsTeacherOrStudent(permissions.BasePermission):
