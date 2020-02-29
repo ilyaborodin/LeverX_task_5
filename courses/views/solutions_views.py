@@ -2,8 +2,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import solutions_serializers
-from courses.permissions.solutions_permissions import IsParticipantObj, IsStudentParticipant
-from courses.permissions.courses_permissions import IsStudent
+from courses.permissions.solutions_permissions import IsParticipantObj, IsStudentParticipant, IsStudent
 from courses.models import Solution
 from rest_framework.response import Response
 

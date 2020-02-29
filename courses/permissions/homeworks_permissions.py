@@ -1,6 +1,6 @@
 from rest_framework import permissions
 from courses.models import Course, Lecture
-from courses.permissions.lectures_permissions import check_permission
+from courses.permissions.methods import check_permission
 
 
 class IsParticipantObj(permissions.BasePermission):

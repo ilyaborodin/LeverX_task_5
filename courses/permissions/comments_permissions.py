@@ -1,5 +1,6 @@
 from rest_framework import permissions
 from courses.models import Comment
+from courses.permissions.methods import check_participant
 
 
 class IsParticipantId(permissions.BasePermission):
@@ -7,10 +8,7 @@ class IsParticipantId(permissions.BasePermission):
         assessment_id = request.data.get("solution")
         comment = Comment.objects.get(id=assessment_id)
         course = comment.solution.homework.lecture.course
-        if request.user.user_type == "Student":
-            return request.user in course.students.all()
-        elif request.user.user_type == "Teacher":
-            return request.user in course.teachers.all()
+        return check_participant(request, course)
 
 
 class IsParticipantPk(permissions.BasePermission):
@@ -18,7 +16,4 @@ class IsParticipantPk(permissions.BasePermission):
         assessment_id = view.kwargs["pk"]
         comment = Comment.objects.get(id=assessment_id)
         course = comment.solution.homework.lecture.course
-        if request.user.user_type == "Student":
-            return request.user in course.students.all()
-        elif request.user.user_type == "Teacher":
-            return request.user in course.teachers.all()
+        return check_participant(request, course)

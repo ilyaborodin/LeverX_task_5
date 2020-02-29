@@ -1,5 +1,6 @@
 from rest_framework import permissions
 from courses.models import Course
+from courses.permissions.methods import check_permission_for_teachers_privileges
 
 
 class IsParticipantObj(permissions.BasePermission):
@@ -8,7 +9,7 @@ class IsParticipantObj(permissions.BasePermission):
     """
     def has_object_permission(self, request, view, obj):
         course = obj.course
-        return check_permission(request, course)
+        return check_permission_for_teachers_privileges(request, course)
 
 
 class IsParticipantID(permissions.BasePermission):
@@ -18,7 +19,7 @@ class IsParticipantID(permissions.BasePermission):
     def has_permission(self, request, view):
         course_id = request.data.get("course")
         course = Course.objects.get(id=course_id)
-        return check_permission(request, course)
+        return check_permission_for_teachers_privileges(request, course)
 
 
 class IsParticipantPK(permissions.BasePermission):
@@ -28,13 +29,4 @@ class IsParticipantPK(permissions.BasePermission):
     def has_permission(self, request, view):
         course_id = view.kwargs["pk"]
         course = Course.objects.get(id=course_id)
-        return check_permission(request, course)
-
-
-def check_permission(request, course):
-    if request.user.user_type == "Student":
-        if request.method not in permissions.SAFE_METHODS:
-            return False
-        return request.user in course.students.all()
-    elif request.user.user_type == "Teacher":
-        return request.user in course.teachers.all()
+        return check_permission_for_teachers_privileges(request, course)
