@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import lectures_serializers
 from courses.permissions.lectures_permissions import IsParticipantObj, IsParticipantID, IsParticipantPK
-from courses.models import Course, Lecture
+from courses.models import Lecture
 from rest_framework.response import Response
 
 
