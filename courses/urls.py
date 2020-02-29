@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import courses_views, lectures_views, homeworks_views
+from .views import courses_views, lectures_views, homeworks_views, solutions_views
 
 # auth
 urlpatterns = [
@@ -26,5 +26,12 @@ urlpatterns += [
 urlpatterns += [
     path('homework/create/', homeworks_views.LectureCreateView.as_view()),
     path('homework/<int:pk>/', homeworks_views.LectureDetailView.as_view()),
+]
+
+# solutions
+urlpatterns += [
+    path('solutions/solution/create/', solutions_views.SolutionCreateView.as_view()),
+    path('solutions/solution/<int:pk>/', solutions_views.SolutionDetailView.as_view()),
+    path('solutions/all/', solutions_views.SolutionListView.as_view()),
 ]
 

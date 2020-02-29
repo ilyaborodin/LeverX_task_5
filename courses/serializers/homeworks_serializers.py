@@ -2,7 +2,7 @@ from rest_framework import serializers
 from courses.models import Homework
 
 
-class LectureCreateSerializer(serializers.ModelSerializer):
+class HomeworkCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Homework
         fields = "__all__"
@@ -11,7 +11,7 @@ class LectureCreateSerializer(serializers.ModelSerializer):
         }
 
 
-class LectureDetailSerializer(serializers.ModelSerializer):
+class HomeworkDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Homework
         fields = "__all__"
