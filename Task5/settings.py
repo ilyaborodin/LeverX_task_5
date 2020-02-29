@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework_simplejwt',
-    'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -144,18 +144,3 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = 'courses.User'
 
-# DJOSER = {
-#     'SERIALIZERS': {
-#          'user_create': 'courses.serializers.UserRegistrationSerializer'
-#     }
-# }
-
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'api_key': {
-            'type': 'apiKey',
-            'in': 'header',
-            'name': 'Authorization'
-        }
-    },
-}
