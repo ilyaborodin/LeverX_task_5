@@ -25,7 +25,7 @@ class CommentListView(generics.ListAPIView):
     serializer_class = comments_serializers.CommentListSerializer
 
     def get_queryset(self, *args, **kwargs):
-        return Comment.objects.filter(assessment=kwargs["assessment"])
+        return Comment.objects.filter(assessment=kwargs["assessment_id"])
 
     def list(self, request, *args, **kwargs):
         return custom_list(self, request, *args, **kwargs)

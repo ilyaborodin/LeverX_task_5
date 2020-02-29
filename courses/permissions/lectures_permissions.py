@@ -33,6 +33,6 @@ class IsParticipantPK(permissions.BasePermission):
     message = "Only teacher or student with method save can access this API"
 
     def has_permission(self, request, view):
-        course_id = view.kwargs["course"]
+        course_id = view.kwargs["course_id"]
         course = Course.objects.get(id=course_id)
         return check_permission_for_teachers_privileges(request, course)

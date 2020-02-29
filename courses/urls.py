@@ -20,7 +20,7 @@ urlpatterns += [
 urlpatterns += [
     path('lectures/lecture/create/', lectures_views.LectureCreateView.as_view()),
     path('lectures/lecture/<int:pk>/', lectures_views.LectureDetailView.as_view()),
-    path('lectures/all/course/<int:course>/', lectures_views.LecturesListView.as_view()),
+    path('lectures/all/course/<int:course_id>/', lectures_views.LecturesListView.as_view()),
 ]
 
 # homework
@@ -45,6 +45,6 @@ urlpatterns += [
 # comments
 urlpatterns += [
     path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
-    path('comments/all/<int:assessment>/', comments_views.CommentListView.as_view()),
+    path('comments/all/<int:assessment_id>/', comments_views.CommentListView.as_view()),
     path('comments/all/', comments_views.CommentListView.as_view()),
 ]
