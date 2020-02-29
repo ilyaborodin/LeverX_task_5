@@ -4,7 +4,7 @@ from rest_framework import generics
 from courses.serializers import solutions_serializers
 from courses.permissions.solutions_permissions import IsParticipantObj, IsStudentParticipant, IsStudent
 from courses.models import Solution
-from rest_framework.response import Response
+from courses.views.methods import custom_list
 
 
 @permission_classes((IsAuthenticated, IsStudentParticipant))
@@ -26,11 +26,4 @@ class SolutionListView(generics.ListAPIView):
         return Solution.objects.filter(creator=kwargs["pk"])
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset(*args, **kwargs))
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return custom_list(self, request, *args, **kwargs)
