@@ -1,5 +1,6 @@
 from django.urls import path, include
-from .views import courses_views, lectures_views, homeworks_views, solutions_views, assessments_views, comments_views
+from courses.views import courses_views, lectures_views, homeworks_views,\
+    solutions_views, assessments_views, comments_views
 
 # auth
 urlpatterns = [
