@@ -19,7 +19,7 @@ class LectureCreateView(generics.CreateAPIView):
 class LectureDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve homework for students of this course
-    Retrieve/Update/Destroy lecture for teachers of this course
+    Retrieve/Update/Destroy homework for teachers of this course
     Available for teachers, students
     """
     serializer_class = homeworks_serializers.LectureDetailSerializer
