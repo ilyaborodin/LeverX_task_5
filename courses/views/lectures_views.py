@@ -36,7 +36,7 @@ class LecturesListView(generics.ListAPIView):
     serializer_class = lectures_serializers.LecturesListSerializer
 
     def get_queryset(self, *args, **kwargs):
-        return Lecture.objects.filter(course=kwargs["pk"])
+        return Lecture.objects.filter(course=kwargs["course"])
 
     def list(self, request, *args, **kwargs):
         return custom_list(self, request, *args, **kwargs)

@@ -23,7 +23,7 @@ class IsParticipantPk(permissions.BasePermission):
     message = "Only user of this course can access this API"
 
     def has_permission(self, request, view):
-        assessment_id = view.kwargs["pk"]
+        assessment_id = view.kwargs["assessment"]
         comment = Comment.objects.get(id=assessment_id)
         course = comment.solution.homework.lecture.course
         return check_participant(request, course)
