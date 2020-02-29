@@ -5,40 +5,30 @@ class IsStudent(permissions.BasePermission):
     """
     Check is user student
     """
-    message = "Only Student can access this API"
-
-    student = "Student"
+    message = "Only student can access this API"
 
     def has_permission(self, request, view):
-        try:
-            user_type = request.user.user_type
-        except AttributeError:
-            self.message = "Permission denied, user_type '{}' does not exists".format(self.student)
-            return False
-        return user_type == self.student
+        user_type = request.user.user_type
+        return user_type == "Student"
 
 
 class IsTeacher(permissions.BasePermission):
     """
     Check is user teacher
     """
-    message = "Only Teacher can access API"
-
-    teacher = "Teacher"
+    message = "Only teacher can access API"
 
     def has_permission(self, request, view):
-        try:
-            user_type = request.user.user_type
-        except AttributeError:
-            self.message = "Permission denied, user_type '{}' does not exists".format(self.teacher)
-            return False
-        return user_type == self.teacher
+        user_type = request.user.user_type
+        return user_type == "Teacher"
 
 
 class IsTeacherOrReadOnly(permissions.BasePermission):
     """
     Check is user teacher or method save
     """
+    message = "Only teacher or student with method save can access this API"
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
@@ -49,5 +39,7 @@ class IsTeacherOrStudent(permissions.BasePermission):
     """
     Check is user teacher or student
     """
+    message = "Only Student and Teacher can access this API"
+
     def has_permission(self, request, view):
         return request.user.user_type == "Teacher" or "Student"

@@ -4,12 +4,22 @@ from courses.permissions.methods import check_teacher, check_participant
 
 
 class IsParticipantObj(permissions.BasePermission):
+    """
+    Check is participant of assessment's course by object
+    """
+    message = "Only user of this course can access this API"
+
     def has_object_permission(self, request, view, obj):
         course = obj.solution.homework.lecture.course
         return check_participant(request, course)
 
 
 class IsTeacherParticipant(permissions.BasePermission):
+    """
+    Check is participant of assessment's course by field
+    """
+    message = "Only user of this course can access this API"
+
     def has_permission(self, request, view):
         solution_id = request.data.get("solution")
         solution = Solution.objects.get(id=solution_id)

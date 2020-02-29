@@ -4,6 +4,11 @@ from courses.permissions.methods import check_participant
 
 
 class IsParticipantId(permissions.BasePermission):
+    """
+    Check is participant of comment's course by field
+    """
+    message = "Only user of this course can access this API"
+
     def has_permission(self, request, view):
         assessment_id = request.data.get("solution")
         comment = Comment.objects.get(id=assessment_id)
@@ -12,6 +17,11 @@ class IsParticipantId(permissions.BasePermission):
 
 
 class IsParticipantPk(permissions.BasePermission):
+    """
+    Check is participant of comment's course by pk
+    """
+    message = "Only user of this course can access this API"
+
     def has_permission(self, request, view):
         assessment_id = view.kwargs["pk"]
         comment = Comment.objects.get(id=assessment_id)
