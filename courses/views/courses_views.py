@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import courses_serializers
 from courses.models import Course
-from courses.permissions import IsTeacher, IsTeacherOrReadOnly, IsTeacherOrStudent
+from courses.permissions.courses_permissions import IsTeacher, IsTeacherOrReadOnly, IsTeacherOrStudent
 
 
 @permission_classes((IsAuthenticated, IsTeacher))

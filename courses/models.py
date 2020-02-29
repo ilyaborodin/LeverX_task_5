@@ -47,6 +47,10 @@ class Course(models.Model):
         return self.title
 
 
+def lecture_directory_path(instance, filename):
+    return 'uploads/course_{0}/lectures/{1}'.format(instance.course, filename)
+
+
 class Lecture(models.Model):
     course = models.ForeignKey(Course,
                                verbose_name="Course of this lecture",
@@ -56,10 +60,9 @@ class Lecture(models.Model):
                              blank=False,
                              max_length=20)
     file = models.FileField(verbose_name="File",
-                            upload_to='uploads/%Y/%m/%d/')
+                            upload_to=lecture_directory_path)
     date_created = models.DateTimeField(verbose_name="Date of creation",
                                         default=timezone.now)
-    date_changed = models.DateTimeField(verbose_name="Date of change")
 
     def __str__(self):
         return self.topic
