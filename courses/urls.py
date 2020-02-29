@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import courses_views, lectures_views, homeworks_views, solutions_views, assessments_views
+from .views import courses_views, lectures_views, homeworks_views, solutions_views, assessments_views, comments_views
 
 # auth
 urlpatterns = [
@@ -39,4 +39,10 @@ urlpatterns += [
 urlpatterns += [
     path('assessments/assessment/create/', assessments_views.AssessmentCreateView),
     path('assessments/assessment/<int:pk>/', assessments_views.AssessmentDetailView),
+]
+
+# comments
+urlpatterns += [
+    path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
+    path('comments/all/<int:pk>/', comments_views.CommentListView.as_view()),
 ]
