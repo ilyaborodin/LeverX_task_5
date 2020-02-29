@@ -8,11 +8,19 @@ from courses.models import Assessment
 
 @permission_classes((IsAuthenticated, IsTeacherParticipant))
 class AssessmentCreateView(generics.CreateAPIView):
+    """
+    Create assessment
+    Available for teachers of this course
+    """
     serializer_class = assessments_serializers.AssessmentCreateSerializer
 
 
 @permission_classes((IsAuthenticated, IsParticipantObj))
 class AssessmentDetailView(generics.RetrieveAPIView):
+    """
+    Retrieve assessment of this course
+    Available for teachers, students
+    """
     serializer_class = assessments_serializers.AssessmentDetailSerializer
     queryset = Assessment.objects.all()
 

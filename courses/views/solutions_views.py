@@ -9,17 +9,29 @@ from courses.views.methods import custom_list
 
 @permission_classes((IsAuthenticated, IsStudentParticipant))
 class SolutionCreateView(generics.CreateAPIView):
+    """
+    Create solution
+    Available for students of this course
+    """
     serializer_class = solutions_serializers.SolutionCreateSerializer
 
 
 @permission_classes((IsAuthenticated, IsParticipantObj))
 class SolutionDetailView(generics.RetrieveAPIView):
+    """
+    Retrieve solution of this course
+    Available for teachers, students
+    """
     serializer_class = solutions_serializers.SolutionDetailSerializer
     queryset = Solution.objects.all()
 
 
 @permission_classes((IsAuthenticated, IsStudent))
 class SolutionListView(generics.ListAPIView):
+    """
+    Retrieve list of solutions
+    Available for teachers of this course, students
+    """
     serializer_class = solutions_serializers.SolutionListSerializer
 
     def get_queryset(self, *args, **kwargs):

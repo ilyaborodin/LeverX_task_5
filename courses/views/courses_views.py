@@ -18,8 +18,8 @@ class CourseCreateView(generics.CreateAPIView):
 @permission_classes((IsAuthenticated, IsTeacherOrReadOnly))
 class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
-    Get course for students
-    Retrieve/Update/Destroy course for creator
+    Retrieve available course for students
+    Retrieve/Update/Destroy available course for creator
     Retrieve available course, update students field for teachers
     Available for all teachers, students
     """
@@ -37,7 +37,7 @@ class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
 @permission_classes((IsAuthenticated, IsTeacherOrStudent))
 class CoursesListView(generics.ListAPIView):
     """
-    Retrieve all courses for students
+    Retrieve all available courses for students
     Retrieve all available courses for teachers
     Available for all teachers, students
     """
