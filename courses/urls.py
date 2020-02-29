@@ -46,4 +46,5 @@ urlpatterns += [
 urlpatterns += [
     path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
     path('comments/all/<int:pk>/', comments_views.CommentListView.as_view()),
+    path('comments/all/', comments_views.CommentListView.as_view()),
 ]

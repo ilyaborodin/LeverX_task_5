@@ -1,7 +1,6 @@
 from rest_framework import permissions
 from courses.models import Homework
-from courses.permissions.courses_permissions import IsStudent
-from courses.permissions.methods import check_participant, check_student
+from courses.permissions.methods import check_participant, check_teacher, check_student
 
 
 class IsParticipantObj(permissions.BasePermission):
@@ -26,3 +25,13 @@ class IsStudentParticipant(permissions.BasePermission):
         homework = Homework.objects.get(id=homework_id)
         course = homework.lecture.course
         return check_student(request, course)
+
+
+class IsTeacherParticipantOrStudent(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.user_type == "Student":
+            return True
+        homework_id = request.data.get("homework")
+        homework = Homework.objects.get(id=homework_id)
+        course = homework.lecture.course
+        return check_teacher(request, course)

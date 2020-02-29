@@ -2,7 +2,8 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import solutions_serializers
-from courses.permissions.solutions_permissions import IsParticipantObj, IsStudentParticipant, IsStudent
+from courses.permissions.solutions_permissions import IsParticipantObj, IsStudentParticipant,\
+    IsTeacherParticipantOrStudent
 from courses.models import Solution
 from courses.views.methods import custom_list
 
@@ -26,7 +27,7 @@ class SolutionDetailView(generics.RetrieveAPIView):
     queryset = Solution.objects.all()
 
 
-@permission_classes((IsAuthenticated, IsStudent))
+@permission_classes((IsAuthenticated, IsTeacherParticipantOrStudent))
 class SolutionListView(generics.ListAPIView):
     """
     Retrieve list of solutions
@@ -35,7 +36,10 @@ class SolutionListView(generics.ListAPIView):
     serializer_class = solutions_serializers.SolutionListSerializer
 
     def get_queryset(self, *args, **kwargs):
-        return Solution.objects.filter(creator=kwargs["pk"])
+        if self.request.user.user_type == "Student":
+            return Solution.objects.filter(creator=self.request.user.id)
+        else:
+            return Solution.objects.filter(homework=kwargs["pk"])
 
     def list(self, request, *args, **kwargs):
         return custom_list(self, request, *args, **kwargs)
