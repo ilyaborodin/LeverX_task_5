@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class LectureCreateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Lecture
         fields = "__all__"
@@ -12,6 +13,7 @@ class LectureCreateSerializer(serializers.ModelSerializer):
 
 
 class LectureDetailSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Lecture
         fields = "__all__"
@@ -22,6 +24,7 @@ class LectureDetailSerializer(serializers.ModelSerializer):
 
 
 class LecturesListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Lecture
         fields = ("id", "topic", "file", "date_created")

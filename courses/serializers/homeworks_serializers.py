@@ -3,6 +3,7 @@ from courses.models import Homework
 
 
 class HomeworkCreateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Homework
         fields = "__all__"
@@ -12,6 +13,7 @@ class HomeworkCreateSerializer(serializers.ModelSerializer):
 
 
 class HomeworkDetailSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Homework
         fields = "__all__"

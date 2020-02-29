@@ -3,10 +3,7 @@ from rest_framework import serializers
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
-    """
-    Course serializer for students and teachers.
-    Only teachers can update only students field
-    """
+
     def validate_students(self, attrs):
         return validator_many_to_many(attrs, "Student")
 
@@ -28,10 +25,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
 
 class CreatorCourseDetailSerializer(serializers.ModelSerializer):
-    """
-    Course serializer for creator.
-    Creator can update everything
-    """
+
     def validate_students(self, attrs):
         return validator_many_to_many(attrs, "Student")
 
@@ -66,10 +60,7 @@ class CreatorCourseDetailSerializer(serializers.ModelSerializer):
 
 
 class CoursesListSerializer(serializers.ModelSerializer):
-    """
-    Courses list serializer.
-    Not all fields of course are displayed
-    """
+
     class Meta:
         model = Course
         fields = "__all__"

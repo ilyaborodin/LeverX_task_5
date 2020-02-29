@@ -19,6 +19,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 
 
 class CommentListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Comment
         fields = ("id", "comment", "creator", "date_created")

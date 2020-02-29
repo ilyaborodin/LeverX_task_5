@@ -19,6 +19,7 @@ class SolutionCreateSerializer(serializers.ModelSerializer):
 
 
 class SolutionDetailSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Solution
         fields = "__all__"
@@ -30,6 +31,7 @@ class SolutionDetailSerializer(serializers.ModelSerializer):
 
 
 class SolutionListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Solution
         fields = ("id", "homework", "link", "date_created")

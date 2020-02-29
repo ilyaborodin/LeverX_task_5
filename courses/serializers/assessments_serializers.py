@@ -10,6 +10,7 @@ class AssessmentCreateSerializer(serializers.ModelSerializer):
 
 
 class AssessmentDetailSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Assessment
         fields = ("id", "rating")
