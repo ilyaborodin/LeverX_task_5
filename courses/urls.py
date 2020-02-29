@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import courses_views, lectures_views, homeworks_views, solutions_views
+from .views import courses_views, lectures_views, homeworks_views, solutions_views, assessments_views
 
 # auth
 urlpatterns = [
@@ -35,3 +35,8 @@ urlpatterns += [
     path('solutions/all/', solutions_views.SolutionListView.as_view()),
 ]
 
+# assessments
+urlpatterns += [
+    path('assessments/assessment/create/', assessments_views.AssessmentCreateView),
+    path('assessments/assessment/<int:pk>/', assessments_views.AssessmentDetailView),
+]
