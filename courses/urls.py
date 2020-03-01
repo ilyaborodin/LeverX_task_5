@@ -1,6 +1,6 @@
 from django.urls import path, include
 from courses.views import courses_views, lectures_views, homeworks_views,\
-    solutions_views, assessments_views, comments_views
+    solutions_views, assessments_views, comments_views, users_views
 
 # auth
 urlpatterns = [
@@ -48,4 +48,10 @@ urlpatterns += [
 urlpatterns += [
     path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
     path('comments/all/<int:assessment_id>/', comments_views.CommentListView.as_view()),
+]
+
+# users
+urlpatterns += [
+    path('users/students/all/', users_views.StudentsListView.as_view()),
+    path('users/teachers/all/', users_views.TeachersListView.as_view()),
 ]
