@@ -113,7 +113,7 @@ class Solution(models.Model):
         ordering = ('-date_created',)
 
     def __str__(self):
-        return "Solution of {}".format(self.homework)
+        return "Solution_{}".format(self.id)
 
 
 class Assessment(models.Model):
@@ -126,7 +126,7 @@ class Assessment(models.Model):
                                  validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     def __str__(self):
-        return "Assessment of {}".format(self.solution)
+        return "Assessment_{}".format(self.id)
 
 
 class Comment(models.Model):
@@ -148,4 +148,4 @@ class Comment(models.Model):
         ordering = ('-date_created',)
 
     def __str__(self):
-        return "Comment of {}".format(self.user.username)
+        return "Comment_{}".format(self.id)
