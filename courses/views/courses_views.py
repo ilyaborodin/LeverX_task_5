@@ -19,9 +19,8 @@ class CourseCreateView(generics.CreateAPIView):
 class CourseDetailView(generics.RetrieveUpdateAPIView):
     """
     Retrieve available course for students
-    Retrieve/Update/Destroy available course for creator
     Retrieve available course, update students field for teachers
-    Available for all teachers, students
+    Available for teachers, students
     """
     serializer_class = courses_serializers.CourseDetailSerializer
     queryset = Course.objects.all()
@@ -42,7 +41,7 @@ class CoursesListView(generics.ListAPIView):
     """
     Retrieve all available courses for students
     Retrieve all available courses for teachers
-    Available for all teachers, students
+    Available for teachers, students
     """
     serializer_class = courses_serializers.CoursesListSerializer
 
