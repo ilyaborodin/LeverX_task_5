@@ -9,12 +9,14 @@ services:
       - POSTGRES_DB=django_db
     volumes:
       - /home/ilya/postgres_data:/var/lib/postgresql/data
-    ports:
-      - 5433:5432
+    expose:
+      - "5432"
 
-  adminer:
-    container_name: "pgamin_container"
-    image: adminer
-    restart: unless-stopped
+  server:
+    container_name: "server"
+    build: ./
+    command: bash -c "python3 ./manage.py runserver 0.0.0.0:2504"
     ports:
-      - 8080:8080
+      - 2504:2504
+    depends_on:
+      - db
