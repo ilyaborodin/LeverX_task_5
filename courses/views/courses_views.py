@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from courses.serializers import courses_serializers
 from courses.models import Course
-from courses.permissions.courses_permissions import IsTeacher, IsTeacherOrReadOnly, IsTeacherOrStudent
+from courses.permissions.courses_permissions import IsTeacher, IsTeacherOrReadOnly, IsTeacherOrStudent, IsCreator
 
 
 @permission_classes((IsAuthenticated, IsTeacher))
@@ -16,7 +16,7 @@ class CourseCreateView(generics.CreateAPIView):
 
 
 @permission_classes((IsAuthenticated, IsTeacherOrReadOnly))
-class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
+class CourseDetailView(generics.RetrieveUpdateAPIView):
     """
     Retrieve available course for students
     Retrieve/Update/Destroy available course for creator
@@ -26,12 +26,15 @@ class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = courses_serializers.CourseDetailSerializer
     queryset = Course.objects.all()
 
-    def get_serializer_class(self):
-        if self.request.user == self.get_object().creator:
-            serializer = courses_serializers.CreatorCourseDetailSerializer
-        else:
-            serializer = courses_serializers.CourseDetailSerializer
-        return serializer
+
+@permission_classes((IsAuthenticated, IsCreator))
+class CourseCreatorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve/Update/Destroy
+    Available for creator
+    """
+    serializer_class = courses_serializers.CreatorCourseDetailSerializer
+    queryset = Course.objects.all()
 
 
 @permission_classes((IsAuthenticated, IsTeacherOrStudent))

@@ -44,3 +44,13 @@ class IsTeacherOrStudent(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return request.user.user_type == "Teacher" or "Student"
+
+
+class IsCreator(permissions.BasePermission):
+    """
+    Check is user creator
+    """
+    message = "Only creator of course can access this API. "
+
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.creator

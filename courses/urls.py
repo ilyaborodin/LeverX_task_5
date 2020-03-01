@@ -14,6 +14,7 @@ urlpatterns += [
     path('courses/all/', courses_views.CoursesListView.as_view()),
     path('courses/all/author/', courses_views.AuthorsCoursesListView.as_view()),
     path('courses/course/detail/<int:pk>/', courses_views.CourseDetailView.as_view()),
+    path('courses/course/creator/detail/<int:pk>/', courses_views.CourseCreatorDetailView.as_view()),
 ]
 
 # lectures
