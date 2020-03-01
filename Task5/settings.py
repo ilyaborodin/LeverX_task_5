@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
