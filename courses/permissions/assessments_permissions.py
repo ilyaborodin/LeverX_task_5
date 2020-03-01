@@ -8,7 +8,8 @@ class IsParticipantObj(permissions.BasePermission):
     """
     Check is participant of assessment's course by object
     """
-    message = "Only user of this course can access this API"
+    message = "Only teacher or student with method save can access this API. " \
+              "User must be a member of this course"
 
     def has_object_permission(self, request, view, obj):
         course = obj.solution.homework.lecture.course
@@ -19,7 +20,8 @@ class IsTeacherParticipant(permissions.BasePermission):
     """
     Check is participant of assessment's course by field
     """
-    message = "Only user of this course can access this API"
+    message = "Only teacher or student with method save can access this API. " \
+              "User must be a member of this course"
 
     def has_permission(self, request, view):
         solution_id = request.data.get("solution")

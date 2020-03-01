@@ -33,7 +33,6 @@ class IsTeacherOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.user in obj.students.all() and request.method in permissions.SAFE_METHODS:
             return True
-        print(request.user in obj.teachers.all())
         return request.user in obj.teachers.all() and request.user.user_type == "Teacher"
 
 
