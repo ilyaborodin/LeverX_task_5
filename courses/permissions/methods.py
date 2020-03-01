@@ -36,4 +36,4 @@ def check_teacher(request, course):
     Check is request.user is teacher of this course
     """
     if request.user.user_type == "Teacher":
-        return request.user in course.students.all()
+        return request.user in course.teachers.all()

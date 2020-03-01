@@ -25,8 +25,8 @@ urlpatterns += [
 
 # homework
 urlpatterns += [
-    path('homework/create/', homeworks_views.LectureCreateView.as_view()),
-    path('homework/<int:pk>/', homeworks_views.LectureDetailView.as_view()),
+    path('homework/create/', homeworks_views.HomeworkCreateView.as_view()),
+    path('homework/<int:pk>/', homeworks_views.HomeworkDetailView.as_view()),
 ]
 
 # solutions
@@ -34,17 +34,17 @@ urlpatterns += [
     path('solutions/solution/create/', solutions_views.SolutionCreateView.as_view()),
     path('solutions/solution/<int:pk>/', solutions_views.SolutionDetailView.as_view()),
     path('solutions/all/', solutions_views.SolutionListView.as_view()),
+    path('solutions/all/<int:homework>/', solutions_views.SolutionListView.as_view()),
 ]
 
 # assessments
 urlpatterns += [
-    path('assessments/assessment/create/', assessments_views.AssessmentCreateView),
-    path('assessments/assessment/<int:pk>/', assessments_views.AssessmentDetailView),
+    path('assessments/assessment/create/', assessments_views.AssessmentCreateView.as_view()),
+    path('assessments/assessment/<int:pk>/', assessments_views.AssessmentDetailView.as_view()),
 ]
 
 # comments
 urlpatterns += [
     path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
     path('comments/all/<int:assessment_id>/', comments_views.CommentListView.as_view()),
-    path('comments/all/', comments_views.CommentListView.as_view()),
 ]

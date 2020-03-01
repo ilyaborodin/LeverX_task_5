@@ -1,4 +1,4 @@
-from courses.models import Solution
+from courses.models import Solution, Assessment
 from rest_framework import serializers
 
 
@@ -19,6 +19,13 @@ class SolutionCreateSerializer(serializers.ModelSerializer):
 
 
 class SolutionDetailSerializer(serializers.ModelSerializer):
+    assessment = serializers.SerializerMethodField('has_assessment')
+
+    def has_assessment(self, solution):
+        try:
+            return Assessment.objects.get(solution=solution.id).id
+        except:
+            return "None"
 
     class Meta:
         model = Solution
@@ -27,6 +34,7 @@ class SolutionDetailSerializer(serializers.ModelSerializer):
             "date_created": {"read_only": True},
             "homework": {"read_only": True},
             "creator": {"read_only": True},
+            "assessment": {"read_only": True},
         }
 
 

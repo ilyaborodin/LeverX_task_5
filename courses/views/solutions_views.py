@@ -39,7 +39,7 @@ class SolutionListView(generics.ListAPIView):
         if self.request.user.user_type == "Student":
             return Solution.objects.filter(creator=self.request.user.id)
         else:
-            return Solution.objects.filter(homework=kwargs["pk"])
+            return Solution.objects.filter(homework=kwargs["homework"])
 
     def list(self, request, *args, **kwargs):
         return custom_list(self, request, *args, **kwargs)

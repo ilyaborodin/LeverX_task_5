@@ -1,6 +1,7 @@
 from rest_framework import permissions
-from courses.models import Comment
+from courses.models import Comment, Assessment
 from courses.permissions.methods import check_participant
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class IsParticipantId(permissions.BasePermission):
@@ -10,9 +11,16 @@ class IsParticipantId(permissions.BasePermission):
     message = "Only user of this course can access this API"
 
     def has_permission(self, request, view):
-        assessment_id = request.data.get("solution")
-        comment = Comment.objects.get(id=assessment_id)
-        course = comment.solution.homework.lecture.course
+        assessment_id = request.data.get("assessment")
+        if assessment_id is None:
+            self.message = "Assessment in request.data does not exist"
+            return False
+        try:
+            assessment = Assessment.objects.get(id=assessment_id)
+        except ObjectDoesNotExist:
+            self.message = "Assessment does not exist"
+            return False
+        course = assessment.solution.homework.lecture.course
         return check_participant(request, course)
 
 
@@ -24,6 +32,10 @@ class IsParticipantPk(permissions.BasePermission):
 
     def has_permission(self, request, view):
         assessment_id = view.kwargs["assessment_id"]
-        comment = Comment.objects.get(id=assessment_id)
-        course = comment.solution.homework.lecture.course
+        try:
+            assessment = Assessment.objects.get(id=assessment_id)
+        except ObjectDoesNotExist:
+            self.message = "Assessment does not exist"
+            return False
+        course = assessment.solution.homework.lecture.course
         return check_participant(request, course)

@@ -1,6 +1,7 @@
 from rest_framework import permissions
 from courses.models import Solution
 from courses.permissions.methods import check_teacher, check_participant
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class IsParticipantObj(permissions.BasePermission):
@@ -22,6 +23,13 @@ class IsTeacherParticipant(permissions.BasePermission):
 
     def has_permission(self, request, view):
         solution_id = request.data.get("solution")
-        solution = Solution.objects.get(id=solution_id)
+        if solution_id is None:
+            self.message = "Solution in request.data does not exist"
+            return False
+        try:
+            solution = Solution.objects.get(id=solution_id)
+        except ObjectDoesNotExist:
+            self.message = "Solution does not exist"
+            return False
         course = solution.homework.lecture.course
         return check_teacher(request, course)

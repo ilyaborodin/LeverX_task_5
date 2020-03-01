@@ -1,6 +1,7 @@
 from rest_framework import permissions
 from courses.models import Course
 from courses.permissions.methods import check_permission_for_teachers_privileges
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class IsParticipantObj(permissions.BasePermission):
@@ -22,7 +23,12 @@ class IsParticipantID(permissions.BasePermission):
 
     def has_permission(self, request, view):
         course_id = request.data.get("course")
-        course = Course.objects.get(id=course_id)
+        course = None
+        try:
+            course = Course.objects.get(id=course_id)
+        except ObjectDoesNotExist:
+            self.message = "Course does not exist"
+            return False
         return check_permission_for_teachers_privileges(request, course)
 
 
@@ -34,5 +40,9 @@ class IsParticipantPK(permissions.BasePermission):
 
     def has_permission(self, request, view):
         course_id = view.kwargs["course_id"]
-        course = Course.objects.get(id=course_id)
+        try:
+            course = Course.objects.get(id=course_id)
+        except ObjectDoesNotExist:
+            self.message = "Course does not exist"
+            return False
         return check_permission_for_teachers_privileges(request, course)

@@ -43,6 +43,9 @@ class Course(models.Model):
     date_created = models.DateTimeField(verbose_name="Date of creation",
                                         default=timezone.now)
 
+    class Meta:
+        ordering = ('-date_created',)
+
     def __str__(self):
         return self.title
 
