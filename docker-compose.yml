@@ -15,7 +15,7 @@ services:
   server:
     container_name: "server"
     build: ./
-    command: bash -c "python3 ./manage.py runserver 0.0.0.0:2504"
+    command: bash -c "python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:2504"
     ports:
       - 2504:2504
     depends_on:
