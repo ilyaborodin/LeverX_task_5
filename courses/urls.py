@@ -1,11 +1,18 @@
-from django.urls import path, include
+from django.urls import path
 from courses.views import courses_views, lectures_views, homeworks_views,\
     solutions_views, assessments_views, comments_views, users_views
+from rest_framework_simplejwt import views as jwt_views
 
 # auth
 urlpatterns = [
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('token/', jwt_views.TokenObtainPairView.as_view()),
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view()),
+]
+
+# users
+urlpatterns += [
+    path('users/students/all/', users_views.StudentsListView.as_view()),
+    path('users/teachers/all/', users_views.TeachersListView.as_view()),
 ]
 
 # courses
@@ -48,10 +55,4 @@ urlpatterns += [
 urlpatterns += [
     path('comments/comment/create/', comments_views.CommentCreateView.as_view()),
     path('comments/all/<int:assessment_id>/', comments_views.CommentListView.as_view()),
-]
-
-# users
-urlpatterns += [
-    path('users/students/all/', users_views.StudentsListView.as_view()),
-    path('users/teachers/all/', users_views.TeachersListView.as_view()),
 ]

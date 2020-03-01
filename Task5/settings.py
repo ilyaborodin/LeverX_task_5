@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses',
     'rest_framework',
-    'djoser',
     'rest_framework_simplejwt',
     'drf_yasg',
     'django_cleanup'
