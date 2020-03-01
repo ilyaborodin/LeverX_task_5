@@ -5,12 +5,13 @@ from rest_framework_simplejwt import views as jwt_views
 
 # auth
 urlpatterns = [
-    path('token/', jwt_views.TokenObtainPairView.as_view()),
+    path('token/create/', jwt_views.TokenObtainPairView.as_view()),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view()),
 ]
 
 # users
 urlpatterns += [
+    path('users/user/create/', users_views.UserRegistrationView.as_view()),
     path('users/students/all/', users_views.StudentsListView.as_view()),
     path('users/teachers/all/', users_views.TeachersListView.as_view()),
 ]

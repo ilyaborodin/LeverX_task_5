@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
-    USER_TYPES = Choices("Student", "Teacher", "Admin")
+    USER_TYPES = Choices("Student", "Teacher")
     user_type = models.CharField(verbose_name="Type of user",
                                  blank=False,
                                  choices=USER_TYPES,

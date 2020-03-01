@@ -54,3 +54,12 @@ class IsCreator(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.user == obj.creator
+
+
+class IsNotAuthenticated(permissions.BasePermission):
+    """
+    Allows access only to not authenticated users.
+    """
+
+    def has_permission(self, request, view):
+        return not bool(request.user and request.user.is_authenticated)
