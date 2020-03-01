@@ -16,6 +16,9 @@ class User(AbstractUser):
                               unique=True)
     REQUIRED_FIELDS = ['email', 'user_type']
 
+    class Meta:
+        ordering = ('username',)
+
     def __str__(self):
         return self.username
 
@@ -67,6 +70,9 @@ class Lecture(models.Model):
     date_created = models.DateTimeField(verbose_name="Date of creation",
                                         default=timezone.now)
 
+    class Meta:
+        ordering = ('-date_created',)
+
     def __str__(self):
         return self.topic
 
@@ -103,6 +109,9 @@ class Solution(models.Model):
     date_created = models.DateTimeField(verbose_name="Date of creation",
                                         default=timezone.now)
 
+    class Meta:
+        ordering = ('-date_created',)
+
     def __str__(self):
         return "Solution of {}".format(self.homework)
 
@@ -134,6 +143,9 @@ class Comment(models.Model):
                                max_length=200)
     date_created = models.DateTimeField(verbose_name="Date of creation",
                                         default=timezone.now)
+
+    class Meta:
+        ordering = ('-date_created',)
 
     def __str__(self):
         return "Comment of {}".format(self.user.username)
