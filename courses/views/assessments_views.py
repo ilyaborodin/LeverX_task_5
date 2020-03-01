@@ -16,11 +16,10 @@ class AssessmentCreateView(generics.CreateAPIView):
 
 
 @permission_classes((IsAuthenticated, IsParticipantObj))
-class AssessmentDetailView(generics.RetrieveAPIView):
+class AssessmentDetailView(generics.RetrieveUpdateAPIView):
     """
     Retrieve assessment of this course
     Available for teachers, students
     """
     serializer_class = assessments_serializers.AssessmentDetailSerializer
     queryset = Assessment.objects.all()
-
